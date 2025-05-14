@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
+    <title>EcoTrack - Save the Planet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url('/images/home.gif') no-repeat center center/cover;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Dark overlay to enhance contrast */
+        body::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            backdrop-filter: blur(8px);
+            padding: 30px;
+            border-radius: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(0, 255, 100, 0.7);
+            animation: neon-border 1.5s infinite alternate;
+        }
+
+        @keyframes neon-border {
+            from {
+                box-shadow: 0 0 10px rgba(0, 255, 100, 0.8);
+            }
+            to {
+                box-shadow: 0 0 20px rgba(0, 255, 100, 1);
+            }
+        }
+
+        h1 {
+            font-size: 3rem;
+            text-shadow: 3px 3px 10px rgba(0, 255, 100, 0.8);
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 2px 2px 10px rgba(0, 255, 100, 0.5); }
+            to { text-shadow: 2px 2px 20px rgba(0, 255, 100, 1); }
+        }
+
+        .eco-message {
+            font-size: 1.5rem;
+            margin-top: 10px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 25px;
+            font-size: 1.3rem;
+            background: linear-gradient(45deg, #4CAF50, #2E7D32);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+            box-shadow: 0px 0px 15px rgba(0, 255, 100, 0.7);
+            animation: pulse 1.5s infinite alternate;
+        }
+
+        .btn:hover {
+            background: linear-gradient(45deg, #2E7D32, #4CAF50);
+            box-shadow: 0px 0px 20px rgba(0, 255, 100, 1);
+            transform: scale(1.05);
+        }
+
+        @keyframes pulse {
+            from {
+                box-shadow: 0px 0px 10px rgba(0, 255, 100, 0.7);
+            }
+            to {
+                box-shadow: 0px 0px 20px rgba(0, 255, 100, 1);
+            }
+        }
+
+        /* Floating particles effect */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: rgb(0, 255, 0);
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: floatParticles linear infinite;
+        }
+
+        @keyframes floatParticles {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles"></div>
+
+    <div class="container">
+        <h1>🌍 Welcome to EcoTrack</h1>
+        <p class="eco-message">Loading...</p>
+        <a href="/users_login.html" class="btn">Get Started</a>
+    </div>
+
+    <script>
+        // Array of eco-friendly messages
+        const messages = [
+            "Reduce your carbon footprint, one step at a time. 🌱",
+            "Small actions make a big impact! 🌎",
+            "Track your footprint, change the future! ♻️",
+            "Go green today, for a better tomorrow. 🌿",
+            "Your choices shape the planet. Act wisely! 🌏"
+        ];
+
+        // Function to change the message every 3 seconds
+        function changeMessage() {
+            const messageElement = document.querySelector('.eco-message');
+            const randomIndex = Math.floor(Math.random() * messages.length);
+            messageElement.textContent = messages[randomIndex];
+        }
+        setInterval(changeMessage, 3000);
+        changeMessage(); // Initial call
+
+        // Floating particles effect
+        function createParticles() {
+            for (let i = 0; i < 20; i++) {
+                let particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = `${Math.random() * 100}vw`;
+                particle.style.top = `${Math.random() * 100}vh`;
+                particle.style.animationDuration = `${Math.random() * 5 + 3}s`; // Random speed
+                document.querySelector('.particles').appendChild(particle);
+            }
+        }
+        createParticles();
+    </script>
+</body>
+</html>

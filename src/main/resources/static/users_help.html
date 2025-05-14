@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32"/>
+  <title>EcoTrack - Eco Help</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(to right, #e0f7fa, #ffffff);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+		height: 65px;
+      background: #004d40;
+      color: #fff;
+      padding: 0.8rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      animation: fadeInDown 1s ease-in-out;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      color: white;
+      text-decoration: none;
+      gap: 0.8rem;
+    }
+
+    .logo-container img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+    }
+
+    .logo-container strong {
+      font-size: 1.8rem;
+    }
+
+    nav {
+      display: flex;
+      gap: 2.5rem;
+    }
+
+    nav a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: white;
+      text-decoration: none;
+      font-size: 0.8rem;
+      gap: 0.2rem;
+      transition: transform 0.3s;
+    }
+
+    nav a i {
+      font-size: 1.2rem;
+    }
+
+    nav a:hover {
+      transform: scale(1.1);
+      color: #b2dfdb;
+    }
+	nav a.active {
+	  color: #03a9f4; /* Bright blue */
+	}
+
+	nav a.active i {
+	  color: #03a9f4;
+	}
+
+
+    main {
+      flex: 1;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    footer {
+      background: #004d40;
+      color: #fff;
+      padding: 1rem;
+      text-align: center;
+      font-size: 0.9rem;
+      animation: fadeInUp 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+
+    @keyframes popUp {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/users_dashboard_go.html" class="logo-container">
+      <img src="/images/ecotrack.jpeg" alt="Company Logo">
+      <strong>EcoTrack</strong>
+    </a>
+    <nav>
+      <a href="/users_profile.html"><i class="fas fa-user"></i><span>Profile</span></a>
+      <a href="/users_activity.html"><i class="fas fa-leaf"></i><span>Eco Activities</span></a>
+      <a href="/users_report.html"><i class="fas fa-chart-line"></i><span>Reports</span></a>
+      <a href="/users_subscription.html"><i class="fas fa-credit-card"></i><span>Subscription</span></a>
+      <a href="/users_notify.html"><i class="fas fa-bell"></i><span>Notifications</span></a>
+	  <a href="/users_help.html" class="active"><i class="fa-solid fa-headset"></i><span>Help Center</span></a>
+      <a href="/home.html" onclick="logout()"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+    </nav>
+  </header>
+  <main>
+    <section style="width: 90%; max-width: 1000px; margin: 2rem auto; animation: fadeIn 1.2s;">
+      <h2 style="text-align: center; color: #1553db; font-size: 2rem; margin-bottom: 1.1rem;">Help Center <i class="fa-solid fa-headset"></i></h2>
+
+      <div style="margin-bottom: 2rem;">
+        <p style="font-size: 1rem; color: #333; text-align: center; font-weight: bold; font-style: italic;">
+          <strong>EcoTrack</strong> is your personal guide to participating in eco-friendly activities like tree planting, beach cleanups, cycling, and much more. Track your efforts, gain insights, and make an impact on the planet – one activity at a time. &#128151;
+        </p>
+      </div>
+		
+	  <div style="text-align: center; margin-top: 2rem;">
+	  	<a href="/users_feedback.html" style="display: inline-flex; align-items: center; background: #06816c; color: white; padding: 0.8rem 1.5rem; border-radius: 50px; text-decoration: none; font-size: 1rem; transition: background 0.3s; margin-bottom: 1rem;">
+	    <i class="fas fa-plus" style="margin-right: 0.5rem;"></i> Give us Feedback
+	    </a>
+	  </div>
+			  
+      <div style="display: flex; flex-direction: column; gap: 1rem;">
+        <!-- Example FAQ Item -->
+        <details style="background: #e0f2f1; border-radius: 8px; padding: 1rem; cursor: pointer; transition: all 0.3s ease;">
+          <summary style="font-size: 1.1rem; font-weight: bold; color: #00695c;">🌱 What is Tree Planting and how does EcoTrack help?</summary>
+          <p style="margin-top: 0.7rem; color: #444;">Tree planting involves planting saplings in various areas to improve air quality, provide shelter, and combat climate change. EcoTrack lets you log every tree you plant and track your contributions over time.</p>
+        </details>
+
+        <details style="background: #f1f8e9; border-radius: 8px; padding: 1rem;cursor: pointer; transition: all 0.3s ease;">
+          <summary style="font-size: 1.1rem; font-weight: bold; color: #558b2f;">♻️ How can I record my Recycling activities?</summary>
+          <p style="margin-top: 0.7rem; color: #444;">You can log recycling activities such as paper, plastic, or e-waste. Just select “Recycling” while logging a new activity and specify the items recycled.</p>
+        </details>
+
+        <details style="background: #ede7f6; border-radius: 8px; padding: 1rem; cursor: pointer; transition: all 0.3s ease;">
+          <summary style="font-size: 1.1rem; font-weight: bold; color: #6a1b9a;">🚲 Does Cycling Instead of Driving really make a difference?</summary>
+          <p style="margin-top: 0.7rem; color: #444;">Absolutely! It reduces carbon emissions and improves your health. EcoTrack shows you the distance cycled and the amount of CO₂ saved.</p>
+        </details>
+
+        <details style="background: #fff3e0; border-radius: 8px; padding: 1rem; cursor: pointer; transition: all 0.3s ease;">
+          <summary style="font-size: 1.1rem; font-weight: bold; color: #ef6c00;">🌊 What do I need to know before joining a Beach Cleanup?</summary>
+          <p style="margin-top: 0.7rem; color: #444;">Wear gloves, bring reusable bags, and follow local safety protocols. You can log cleanup hours and the estimated amount of waste collected.</p>
+        </details>
+
+        <details style="background: #e3f2fd; border-radius: 8px; padding: 1rem; cursor: pointer; transition: all 0.3s ease;">
+          <summary style="font-size: 1.1rem; font-weight: bold; color: #0277bd;">🚆 How does Public Transport Usage get tracked?</summary>
+          <p style="margin-top: 0.7rem; color: #444;">You can input your trips using buses, trains, or trams, and EcoTrack will calculate your reduced emissions compared to car travel.</p>
+        </details>
+
+        <details style="background: #fce4ec; border-radius: 8px; padding: 1rem; cursor: pointer; transition: all 0.3s ease;">
+          <summary style="font-size: 1.1rem; font-weight: bold; color: #ad1457;">🧼 What qualifies as an Eco-friendly Product?</summary>
+          <p style="margin-top: 0.7rem; color: #444;">Products made from sustainable, biodegradable, or recyclable materials qualify. Logging their use helps build your eco-profile.</p>
+        </details>
+		<details style="background: #f4f2da; border-radius: 8px; padding: 1rem; cursor: pointer; transition: all 0.3s ease;">
+		  <summary style="font-size: 1.1rem; font-weight: bold; color: #b68103;">🔌 How does Saving Electricity help?</summary>
+		  <p style="margin-top: 0.7rem; color: #444;">Turning off unused devices and using energy-efficient appliances reduces emissions. Log it on EcoTrack to see your impact!</p>
+		</details>
+
+		<details style="background: #c8e4ffb8; border-radius: 8px; padding: 1rem; cursor: pointer; transition: all 0.3s ease;">
+		  <summary style="font-size: 1.1rem; font-weight: bold; color: #003dc2;">🚿 Why is Conserving Water important?</summary>
+		  <p style="margin-top: 0.7rem; color: #444;">Water is precious! Fixing leaks, collecting rainwater, or shorter showers can all be tracked for eco-points in EcoTrack.</p>
+		</details>
+
+		<details style="background: #dad5ffb8; border-radius: 8px; padding: 1rem; cursor: pointer; transition: all 0.3s ease;">
+		  <summary style="font-size: 1.1rem; font-weight: bold; color: #5900b6;">📚 What counts as Eco Education?</summary>
+		  <p style="margin-top: 0.7rem; color: #444;">Hosting or joining climate talks, workshops, or school campaigns are all valuable. EcoTrack lets you log and share them.</p>
+		</details>
+
+		<details style="background: #b9ffebb8; border-radius: 8px; padding: 1rem; cursor: pointer; transition: all 0.3s ease;">
+		  <summary style="font-size: 1.1rem; font-weight: bold; color: #06744fe8;">🍽️ How can I Reduce Food Waste?</summary>
+		  <p style="margin-top: 0.7rem; color: #444;">Meal planning, storing food right, and composting scraps helps. Track your kitchen wins on EcoTrack!</p>
+		</details>
+
+		<details style="background: #fcf4e4; border-radius: 8px; padding: 1rem; cursor: pointer; transition: all 0.3s ease;">
+		  <summary style="font-size: 1.1rem; font-weight: bold; color: #bc5500;">🌞 What qualifies as Solar Energy Usage?</summary>
+		  <p style="margin-top: 0.7rem; color: #444;">Using solar panels or solar chargers counts. Log your sun-powered efforts to shine on the EcoTrack leaderboard.</p>
+		</details>
+
+		<details style="background: #afb1ae66; border-radius: 8px; padding: 1rem; cursor: pointer; transition: all 0.3s ease;">
+		  <summary style="font-size: 1.1rem; font-weight: bold; color: #403a88;">🚯 What's an Anti-Littering Campaign?</summary>
+		  <p style="margin-top: 0.7rem; color: #444;">Activities that raise awareness or clean up public spaces qualify. EcoTrack helps you showcase your local impact.</p>
+		</details>
+
+		<details style="background: #fccffa99; border-radius: 8px; padding: 1rem; cursor: pointer; transition: all 0.3s ease;">
+		  <summary style="font-size: 1.1rem; font-weight: bold; color: #970ca9;">🐾 How do Animal Rescue / Care activities count?</summary>
+		  <p style="margin-top: 0.7rem; color: #444;">Helping stray or injured animals, or volunteering at shelters, earns eco-karma. Log your good deeds easily!</p>
+		</details>
+
+		<details style="background: #aee9b891; border-radius: 8px; padding: 1rem; cursor: pointer; transition: all 0.3s ease;">
+		  <summary style="font-size: 1.1rem; font-weight: bold; color: #326b45;">🏡 What is Home Composting?</summary>
+		  <p style="margin-top: 0.7rem; color: #444;">Turning food and garden waste into compost reduces landfill load. Track your compost bin progress in EcoTrack!</p>
+		</details>
+
+		<details style="background: #f1f4c5c2; border-radius: 8px; padding: 1rem; cursor: pointer; transition: all 0.3s ease;">
+		  <summary style="font-size: 1.1rem; font-weight: bold; color: #db3d3de3;">🚆 How does using Public Transport help?</summary>
+		  <p style="margin-top: 0.7rem; color: #444;">Choosing buses, trains, or carpools over private vehicles cuts emissions. Your rides make a difference — log them!</p>
+		</details>
+        <!-- You can replicate the same block for more FAQs -->
+      </div>
+    </section>
+  </main>
+  <footer>
+    &copy; <span id="year"></span> EcoTrack | 
+	<a href="https://mail.google.com/mail/?view=cm&to=sahinislam8371@gmail.com" target="_blank" style="text-decoration: none;color: aqua;">
+	    Email us |
+	<a href="/privacy.html" target="_blank" style="text-decoration: none;color: deeppink;">
+		Privacy Policy
+  </footer>
+
+  <script>
+    // Set current year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Logout functionality
+    function logout() {
+      fetch('/users/user_logout', {
+        method: 'POST'
+      })
+      .then(res => res.text())
+      .then(msg => {
+        alert(msg);
+        window.location.replace = '/home.html';
+      });
+    }
+  </script>
+</body>
+</html>

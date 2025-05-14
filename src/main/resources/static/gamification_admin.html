@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32"/>
+  <title>EcoTrack - Eco Leaderboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(to right, #e0f7fa, #ffffff);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+		height: 65px;
+      background: #004d40;
+      color: #fff;
+      padding: 0.8rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      animation: fadeInDown 1s ease-in-out;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      color: white;
+      text-decoration: none;
+      gap: 0.8rem;
+    }
+
+    .logo-container img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+    }
+
+    .logo-container strong {
+      font-size: 1.8rem;
+    }
+
+    nav {
+      display: flex;
+      gap: 2.5rem;
+    }
+
+    nav a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: white;
+      text-decoration: none;
+      font-size: 0.8rem;
+      gap: 0.2rem;
+      transition: transform 0.3s;
+    }
+
+    nav a i {
+      font-size: 1.2rem;
+    }
+
+    nav a:hover {
+      transform: scale(1.1);
+      color: #b2dfdb;
+    }
+	nav a.active {
+	  color: #03a9f4; /* Bright blue */
+	}
+
+	nav a.active i {
+	  color: #03a9f4;
+	}
+
+
+    main {
+      flex: 1;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+	.leaderboard-table {
+		  width: 100%;
+		  border-collapse: separate;
+		  border-spacing: 0;
+		  margin: 0 auto;
+		  font-size: 1rem;
+		  border-radius: 12px;
+		  overflow: hidden;
+		  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+		  animation: fadeIn 1s ease-in;
+		}
+
+		.leaderboard-table th {
+		  background-color: #00796b;
+		  color: white;
+		  padding: 14px;
+		  text-align: center;
+		}
+
+		.leaderboard-table td {
+		  padding: 10px;
+		  text-align: center;
+		  font-weight: bold;
+		  font-style: italic;
+		}
+
+		.leaderboard-table tr:nth-child(even) {
+		  background-color: #f1f8f7;
+		}
+
+		.leaderboard-table tr:hover {
+		  background-color: #e0f2f1;
+		  transform: scale(1.01);
+		  transition: all 0.2s ease-in-out;
+		}
+
+		.badge {
+		  padding: 6px 12px;
+		  border-radius: 1rem;
+		  font-size: 0.85rem;
+		  color: #f40ad5;
+		  font-weight: bold;
+		  display: inline-block;
+		}
+		.badge-20 { background-color: #8bc34a; }
+		.badge-20 { background-color: #8bc34a; }
+		.badge-40 { background-color: #4caf50; }
+		.badge-60 { background-color: #2196f3; }
+		.badge-80 { background-color: #ff9800; }
+		.badge-100 { background-color: #e91e63; }
+		
+		.user-image {
+		  width: 55px;
+		  height: 55px;
+		  border-radius: 50%;
+		  border: 2px solid #fff;
+		  margin-right: 10px; /* Adds spacing between the image and text */
+		}
+
+    footer {
+      background: #004d40;
+      color: #fff;
+      padding: 1rem;
+      text-align: center;
+      font-size: 0.9rem;
+      animation: fadeInUp 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+
+    @keyframes popUp {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+	.action-button {
+	  background-color: #198a41;
+	  color: #fff;
+	  border: none;
+	  padding: 8px 16px;
+	  border-radius: 8px;
+	  font-size: 0.9rem;
+	  cursor: pointer;
+	  transition: background-color 0.3s ease, transform 0.2s ease;
+	}
+
+	.action-button:hover {
+	  background-color: #004d40; /* Darker teal */
+	  transform: scale(1.05);
+	}
+
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/admin_dashboard.html" class="logo-container">
+      <img src="/images/ecotrack.jpeg" alt="Company Logo">
+      <strong>EcoTrack</strong>
+    </a>
+    <nav>
+      <a href="/admin_system_usg.html"><i class="fa-solid fa-display"></i><span>System Usage</span></a>
+      <a href="/admin_revenue.html"><i class="fa-solid fa-money-bill-trend-up"></i><span>Monitor Revenue</span></a>
+      <a href="/admin_report.html" class="active"><i class="fa-brands fa-pagelines"></i><span>Eco Reports</span></a>
+      <a href="/admin_subscription.html"><i class="fas fa-credit-card"></i><span>Subscriptions</span></a>
+      <a href="/admin_support.html"><i class="fa-solid fa-handshake-angle"></i><span>Support</span></a>
+      <a href="/home.html" onclick="logout()"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+    </nav>
+  </header>
+
+  <main>
+	<section style="width: 90%; max-width: 900px; padding: 2rem; background: #ffffff87;border:2px solid #db55f3; border-radius: 1rem; box-shadow: 0 10px 25px rgba(0,0,0,0.1); animation: popUp 0.8s ease-in-out;">
+	      <h2 style="text-align: center; color: #00796b; font-size: 2rem; margin-bottom: 1.5rem; animation: fadeIn 1s;">🌿 Eco Leaderboard</h2>
+	      
+	      <table class="leaderboard-table" id="leaderboard-table">
+	        <thead>
+	          <tr>
+	            <th>Rank</th>
+	            <th>User</th>
+	            <th>Total Eco Points</th>
+	            <th>Current Badge</th>
+				<th>Action</th>
+	          </tr>
+	        </thead>
+	        <tbody>
+	          <!-- Rows inserted via JS -->
+	        </tbody>
+	      </table>
+	    </section>
+	  </main>
+	   <script>
+		// Fetch leaderboard data
+		fetch('/users/leaderboard')
+		  .then(res => res.json())
+		  .then(data => {
+		    const leaderboardTable = document.getElementById('leaderboard-table').getElementsByTagName('tbody')[0];
+		    let rank = 1;
+		    data.forEach(user => {
+		      const row = leaderboardTable.insertRow();
+		      row.innerHTML = `
+		        <td>${rank++}</td>
+		        <td>
+					<img src="${user.profileImageUrl}" alt="User Image" class="user-image"> ${user.email}</td>
+		        <td>${user.points}</td>
+		        <td>${generateBadge(user.points)}</td>
+				<td>
+				<button class="action-button" onclick="goToMessagePage('${user.email}')">Send Message</button> <!-- Add button -->
+				</td>
+		      `;
+		    });
+		  })
+		  .catch(error => console.error('Error fetching leaderboard:', error));
+
+		function generateBadge(points) {
+		  if (points >= 100) return `<span class="badge badge-100">🌳 Guardian of Nature (100+)</span>`;
+		  if (points >= 80) return `<span class="badge badge-80">🌿 Eco Hero (80-99)</span>`;
+		  if (points >= 60) return `<span class="badge badge-60">🍀 Green Advocate (60-79)</span>`;
+		  if (points >= 40) return `<span class="badge badge-40">🌱 Sustainability Seeker (40-59)</span>`;
+		  if (points >= 20) return `<span class="badge badge-20">🌼 Earth Learner (20-39)</span>`;
+		  if (points >= 0) return `<span class="badge badge-0">🌍 Eco Newbie (0-19)</span>`;
+		  return `<span style="color:#ccc;">—</span>`;
+		}
+		// Store email in localStorage and navigate to the message page
+		  function goToMessagePage(email) {
+		    localStorage.setItem('selectedUserEmail', email); // Save the selected email
+		    window.location.href = '/admin_send_notify.html'; // Redirect to the message page
+		  }
+		</script>
+
+  <footer>
+    &copy; <span id="year"></span> EcoTrack | 
+    <a href="https://mail.google.com/mail/?view=cm&to=sahinislam8371@gmail.com" target="_blank" style="text-decoration: none;color: aqua;">
+      Email us |
+    </a>
+    <a href="/privacy.html" target="_blank" style="text-decoration: none;color: deeppink;">
+      Privacy Policy
+    </a>
+  </footer>
+
+  <script>
+    // Set current year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+	// Logout functionality
+	    function logout() {
+	      fetch('/admin/admin_logout', {
+	        method: 'POST'
+	      })
+	      .then(res => res.text())
+	      .then(msg => {
+	        alert(msg);
+	        window.location.replace = '/home.html';
+	      });
+	    }
+  </script>
+
+</body>
+</html>

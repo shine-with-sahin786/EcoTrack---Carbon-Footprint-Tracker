@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32"/>
+  <title>EcoTrack - View Eco Reports</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(to right, #e0f7fa, #ffffff);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+		height: 65px;
+      background: #004d40;
+      color: #fff;
+      padding: 0.8rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      animation: fadeInDown 1s ease-in-out;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      color: white;
+      text-decoration: none;
+      gap: 0.8rem;
+    }
+
+    .logo-container img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+    }
+
+    .logo-container strong {
+      font-size: 1.8rem;
+    }
+
+    nav {
+      display: flex;
+      gap: 2.5rem;
+    }
+
+    nav a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: white;
+      text-decoration: none;
+      font-size: 0.8rem;
+      gap: 0.2rem;
+      transition: transform 0.3s;
+    }
+
+    nav a i {
+      font-size: 1.2rem;
+    }
+
+    nav a:hover {
+      transform: scale(1.1);
+      color: #b2dfdb;
+    }
+	nav a.active {
+	  color: #03a9f4; /* Bright blue */
+	}
+
+	nav a.active i {
+	  color: #03a9f4;
+	}
+
+
+    main {
+      flex: 1;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .main-gif-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+      opacity: 0.7;
+    }
+
+    footer {
+      background: #004d40;
+      color: #fff;
+      padding: 1rem;
+      text-align: center;
+      font-size: 0.9rem;
+      animation: fadeInUp 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+
+    @keyframes popUp {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/admin_dashboard.html" class="logo-container">
+      <img src="/images/ecotrack.jpeg" alt="Company Logo">
+      <strong>EcoTrack</strong>
+    </a>
+    <nav>
+      <a href="/admin_system_usg.html"><i class="fa-solid fa-display"></i><span>System Usage</span></a>
+      <a href="/admin_revenue.html"><i class="fa-solid fa-money-bill-trend-up"></i><span>Monitor Revenue</span></a>
+      <a href="/admin_report.html" class="active"><i class="fa-brands fa-pagelines"></i><span>Eco Reports</span></a>
+      <a href="/admin_subscription.html"><i class="fas fa-credit-card"></i><span>Subscriptions</span></a>
+      <a href="/admin_support.html"><i class="fa-solid fa-handshake-angle"></i><span>Support</span></a>
+      <a href="/home.html" onclick="logout()"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+    </nav>
+  </header>
+
+  <main>
+	<section style="width: 90%; max-width: 1200px; margin-top: 2rem; animation: popUp 1s ease;">
+	      <h2 style="text-align: center; font-size: 2rem; margin-bottom: 2rem; color: #eb00b6;">Eco Activity Report Dashboard &#128202;</h2>
+
+	      <!-- Activity Filter -->
+	      <div style="display: flex; justify-content: center; margin-bottom: 2rem;">
+	        <select id="activityFilter" onchange="filterActivity()" style="padding: 0.6rem 1rem; border-radius: 8px; border: 1px solid #ccc; font-size: 1rem;">
+	          <option value="">All Activities</option>
+	          <option value="Tree Planting">🌱 Tree Planting</option>
+	          <option value="Recycling">♻️ Recycling</option>
+	          <option value="Cycling Instead of Driving">🚲 Cycling Instead of Driving</option>
+	          <option value="Beach Cleanup">🌊 Beach Cleanup</option>
+	          <option value="Organic Farming">🍃 Organic Farming</option>
+	          <option value="Using Reusable Bags">🛍️ Using Reusable Bags</option>
+	          <option value="Saving Electricity">🔌 Saving Electricity</option>
+	          <option value="Conserving Water">🚿 Conserving Water</option>
+	          <option value="Eco Education">📚 Eco Education</option>
+	          <option value="Reducing Food Waste">🍽️ Reducing Food Waste</option>
+	          <option value="Solar Energy Usage">🌞 Solar Energy Usage</option>
+	          <option value="Anti-Littering Campaign">🚯 Anti-Littering Campaign</option>
+	          <option value="Animal Rescue / Care">🐾 Animal Rescue / Care</option>
+	          <option value="Home Composting">🏡 Home Composting</option>
+	          <option value="Eco-friendly Products">🧼 Eco-friendly Products</option>
+	          <option value="Public Transport Usage">🚆 Public Transport Usage</option>
+	        </select>
+	      </div>
+			
+		  <div style="margin-bottom: 1rem;">
+		    <label for="monthSelector">Select Month:</label>
+		    <select id="monthSelector" onchange="onMonthChange()" style="padding: 6px; margin-right: 1rem;"></select>
+		  </div>
+
+	      <!-- Chart Container -->
+	      <div style="background: #e0f2f1; padding: 2rem; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+	        <canvas id="activityChart" height="100"></canvas>
+	      </div>
+
+	      <!-- CO2 Saved Progress -->
+	      <div style="margin-top: 3rem;">
+	        <h3 style="color: #004d40; margin-bottom: 1rem;">Estimated CO₂ Saved</h3>
+	        <div id="co2ProgressBars"></div>
+	      </div>
+	    </section>
+
+	    <!-- Chart.js CDN -->
+	    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+		<script>
+		  const co2Values = {
+		    "Tree Planting": 21,
+		    "Recycling": 15,
+		    "Cycling Instead of Driving": 18,
+		    "Beach Cleanup": 10,
+		    "Organic Farming": 22,
+		    "Using Reusable Bags": 7,
+		    "Saving Electricity": 13,
+		    "Conserving Water": 11,
+		    "Eco Education": 6,
+		    "Reducing Food Waste": 12,
+		    "Solar Energy Usage": 30,
+		    "Anti-Littering Campaign": 9,
+		    "Animal Rescue / Care": 5,
+		    "Home Composting": 14,
+		    "Eco-friendly Products": 8,
+		    "Public Transport Usage": 16
+		  };
+
+		  let allActivities = [];
+		  let currentMonthActivities = [];
+		  let chart;
+
+		  async function fetchActivities() {
+		    try {
+		      const res = await fetch('/users/all_log_activities');
+		      if (!res.ok) throw new Error('Not authorized or no data');
+
+		      allActivities = await res.json();
+		      populateMonthOptions();
+		      onMonthChange(); // initialize chart for default month
+		    } catch (err) {
+		      console.error('Failed to load activity data:', err);
+		    }
+		  }
+
+		  function populateMonthOptions() {
+		    const monthSelector = document.getElementById('monthSelector');
+		    const uniqueMonths = [...new Set(allActivities.map(entry => {
+		      const d = new Date(entry.when);
+		      return `${d.getFullYear()}-${d.getMonth()}`;
+		    }))];
+
+		    uniqueMonths.sort().reverse();
+
+		    monthSelector.innerHTML = '';
+		    uniqueMonths.forEach(m => {
+		      const [year, month] = m.split('-');
+		      const date = new Date(year, month);
+		      const label = date.toLocaleString('default', { month: 'long', year: 'numeric' });
+		      const value = `${year}-${month}`;
+		      monthSelector.innerHTML += `<option value="${value}">${label}</option>`;
+		    });
+		  }
+
+		  function onMonthChange() {
+		    const selectedMonth = document.getElementById('monthSelector').value;
+		    const [year, month] = selectedMonth.split('-').map(Number);
+
+		    currentMonthActivities = allActivities.filter(entry => {
+		      const d = new Date(entry.when);
+		      return d.getFullYear() === year && d.getMonth() === month;
+		    });
+
+		    populateActivityFilter(currentMonthActivities);
+		    generateChart(); // default chart with no filter
+		  }
+
+		  function populateActivityFilter(data) {
+		    const filterSelect = document.getElementById('activityFilter');
+		    const uniqueTypes = [...new Set(data.map(d => d.type))];
+		    filterSelect.innerHTML = `<option value="">All Activities</option>`;
+		    uniqueTypes.forEach(type => {
+		      filterSelect.innerHTML += `<option value="${type}">${type}</option>`;
+		    });
+		  }
+
+		  function generateChart(filteredType = "") {
+		    const chartData = {};
+		    const co2Stats = {};
+
+		    currentMonthActivities.forEach(entry => {
+		      if (filteredType && entry.type !== filteredType) return;
+
+		      const date = new Date(entry.when).toLocaleDateString("en-US", { month: "short", day: "numeric" });
+		      chartData[date] = (chartData[date] || 0) + 1;
+
+		      const co2 = co2Values[entry.type] || 0;
+		      co2Stats[entry.type] = (co2Stats[entry.type] || 0) + co2;
+		    });
+
+		    const labels = Object.keys(chartData);
+		    const values = Object.values(chartData);
+
+		    if (chart) chart.destroy();
+		    chart = new Chart(document.getElementById("activityChart"), {
+		      type: "bar",
+		      data: {
+		        labels,
+		        datasets: [{
+		          label: "No. of Activities",
+		          data: values,
+		          backgroundColor: "#00796b",
+		          borderRadius: 6
+		        }]
+		      },
+		      options: {
+		        responsive: true,
+		        plugins: {
+		          legend: { display: false },
+		          title: {
+		            display: true,
+		            text: "Activities Over Time",
+		            font: { size: 18 }
+		          }
+		        }
+		      }
+		    });
+
+		    // Render CO2 Progress
+		    const co2Container = document.getElementById("co2ProgressBars");
+		    co2Container.innerHTML = "";
+		    Object.entries(co2Stats).forEach(([type, value]) => {
+		      co2Container.innerHTML += `
+		        <div style="margin-bottom: 1.2rem;">
+		          <span style="font-weight: bold; color: #00695c;">${type} - ${value}kg CO₂</span>
+		          <div style="background: #c8e6c9; border-radius: 10px; height: 20px; margin-top: 5px;">
+		            <div style="width: ${Math.min(value, 100)}%; background: #43a047; height: 100%; border-radius: 10px; transition: width 0.4s;"></div>
+		          </div>
+		        </div>
+		      `;
+		    });
+		  }
+
+		  function filterActivity() {
+		    const selected = document.getElementById("activityFilter").value;
+		    generateChart(selected);
+		  }
+
+		  // On load
+		  window.onload = fetchActivities;
+		</script>
+    </main>
+
+  <footer>
+    &copy; <span id="year"></span> EcoTrack | 
+    <a href="https://mail.google.com/mail/?view=cm&to=sahinislam8371@gmail.com" target="_blank" style="text-decoration: none;color: aqua;">
+      Email us |
+    </a>
+    <a href="/privacy.html" target="_blank" style="text-decoration: none;color: deeppink;">
+      Privacy Policy
+    </a>
+  </footer>
+
+  <script>
+    // Set current year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+	// Logout functionality
+	    function logout() {
+	      fetch('/admin/admin_logout', {
+	        method: 'POST'
+	      })
+	      .then(res => res.text())
+	      .then(msg => {
+	        alert(msg);
+	        window.location.replace = '/home.html';
+	      });
+	    }
+  </script>
+
+</body>
+</html>

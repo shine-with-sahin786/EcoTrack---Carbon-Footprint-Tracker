@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoTrack - Make Admin</title>
+	<link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #66ffcc, rgb(85, 170, 170));
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: white;
+        }
+        .form-container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            width: 600px;
+            text-align: center;
+        }
+        .form-container h1 {
+            color: #3096f1;
+			font-family: cursive;
+        }
+        .input-group {
+            position: relative;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        .input-group input, .input-group select, .input-group textarea {
+            width: 90%;
+            padding: 10px 40px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .input-group i {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #2d6a4f;
+        }
+        .submit-btn {
+            width: 100%;
+            background: #2d6a4f;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s ease-in-out;
+        }
+        .submit-btn:hover {
+            background: #409080;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1><i class="fa-solid fa-user-plus"></i> Create Admin Account</h1>
+        <form id="registerForm">>
+            <div class="input-group">
+                <i class="fa-solid fa-envelope"></i>
+                <input type="text" id="id" placeholder="Admin ID" required>
+            </div>
+            <div class="input-group">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" id="password" placeholder="Password" required>
+            </div>
+            <button type="submit" class="submit-btn">Register</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("registerForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const userData = {
+                id: document.getElementById("id").value.trim(),
+                password: document.getElementById("password").value.trim()
+            };
+
+            fetch("/admin/create", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(userData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Registration failed");
+                }
+                return response.text();
+            })
+            .then(() => {
+				alert("Registration successful!");
+                window.location.replace("/home.html");
+            })
+            .catch(error => {
+                alert("Error: " + error.message);
+            });
+        });
+    </script>
+</body>
+</html>

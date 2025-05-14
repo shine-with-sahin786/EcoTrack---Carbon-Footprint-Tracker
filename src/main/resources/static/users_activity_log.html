@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32"/>
+  <title>EcoTrack - Eco Activities</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(to right, #e0f7fa, #ffffff);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+		height: 65px;
+      background: #004d40;
+      color: #fff;
+      padding: 0.8rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      animation: fadeInDown 1s ease-in-out;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      color: white;
+      text-decoration: none;
+      gap: 0.8rem;
+    }
+
+    .logo-container img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+    }
+
+    .logo-container strong {
+      font-size: 1.8rem;
+    }
+
+    nav {
+      display: flex;
+      gap: 2.5rem;
+    }
+
+    nav a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: white;
+      text-decoration: none;
+      font-size: 0.8rem;
+      gap: 0.2rem;
+      transition: transform 0.3s;
+    }
+
+    nav a i {
+      font-size: 1.2rem;
+    }
+
+    nav a:hover {
+      transform: scale(1.1);
+      color: #b2dfdb;
+    }
+	nav a.active {
+	  color: #03a9f4; /* Bright blue */
+	}
+
+	nav a.active i {
+	  color: #03a9f4;
+	}
+
+
+    main {
+      flex: 1;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    #greeting {
+      position: relative;
+      z-index: 1;
+      font-size: 3rem;
+      color: #004d40;
+      background-color: rgba(255, 255, 255, 0.7);
+      padding: 1rem 2rem;
+      border-radius: 10px;
+      animation: popUp 1.5s ease;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+
+    @keyframes popUp {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+	footer {
+	      background: #004d40;
+	      color: #fff;
+	      padding: 1rem;
+	      text-align: center;
+	      font-size: 0.9rem;
+	      animation: fadeInUp 1s ease-in-out;
+	    }
+	.activity-card {
+	  background-color: #ffffff70;
+	  box-shadow: 0 8px 20px rgba(0, 77, 64, 0.1);
+	  border-left: 5px solid #26a69a;
+	  border-radius: 12px;
+	  padding: 1.5rem;
+	  transition: transform 0.3s ease;
+	}
+
+	.activity-card:hover {
+	  transform: translateY(-5px);
+	}
+
+	.activity-card-header h3 {
+	  color: #00796b;
+	  font-size: 1.2rem;
+	  margin: 0;
+	}
+
+	.activity-card-header span {
+	  font-size: 0.9rem;
+	  color: #757575;
+	}
+
+	.activity-card p {
+	  font-size: 0.95rem;
+	  color: #424242;
+	  margin: 0.3rem 0;
+	}
+
+	.filters {
+	  display: flex;
+	  gap: 1rem;
+	  flex-wrap: wrap;
+	  margin-bottom: 1rem;
+	}
+
+	.filters select {
+	  padding: 0.6rem 1rem;
+	  font-size: 1rem;
+	  border: 1px solid #ccc;
+	  border-radius: 8px;
+	  background-color: #f5f5f5;
+	  color: #333;
+	  transition: border-color 0.3s;
+	}
+
+	.filters select:focus {
+	  border-color: #26a69a;
+	  outline: none;
+	}
+  </style>
+  <script>
+  let originalActivities = [];
+
+  document.addEventListener("DOMContentLoaded", function () {
+    fetch("/users/log_activities")
+      .then(res => res.json())
+      .then(data => {
+        originalActivities = data;
+        displayActivities(data);
+      });
+
+    document.getElementById("filter-type").addEventListener("change", applyFilters);
+    document.getElementById("sort-by").addEventListener("change", applyFilters);
+  });
+
+  function applyFilters() {
+    let filtered = [...originalActivities];
+    const type = document.getElementById("filter-type").value;
+    const sortBy = document.getElementById("sort-by").value;
+
+    if (type) {
+      filtered = filtered.filter(a => a.type === type);
+    }
+
+    if (sortBy === "recent") {
+      filtered.sort((a, b) => new Date(b.when) - new Date(a.when));
+    } else if (sortBy === "oldest") {
+      filtered.sort((a, b) => new Date(a.when) - new Date(b.when));
+    } else if (sortBy === "points-high") {
+      filtered.sort((a, b) => b.points - a.points);
+    } else if (sortBy === "points-low") {
+      filtered.sort((a, b) => a.points - b.points);
+    }
+
+    displayActivities(filtered);
+  }
+
+  function displayActivities(activities) {
+    const container = document.querySelector(".activities-container");
+    container.innerHTML = "";
+
+    if (!activities.length) {
+      container.innerHTML = "<p>No eco activities found.</p>";
+      return;
+    }
+
+    activities.forEach(activity => {
+      const card = document.createElement("div");
+      card.className = "activity-card";
+      card.innerHTML = `
+        <div class="activity-card-header">
+          <h3>${activity.type}</h3>
+		  <span>${new Date(activity.when).toLocaleDateString()}</span>
+        </div>
+        <p><strong>Description:</strong> ${activity.description}</p>
+        <p><strong>Points:</strong> ${activity.points}</p>
+        <p><strong>Location:</strong> ${activity.location}</p>
+      `;
+      container.appendChild(card);
+    });
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <a href="/users_dashboard_go.html" class="logo-container">
+      <img src="/images/ecotrack.jpeg" alt="Company Logo">
+      <strong>EcoTrack</strong>
+    </a>
+    <nav>
+      <a href="/users_profile.html"><i class="fas fa-user"></i><span>Profile</span></a>
+      <a href="/users_activity.html" class="active"><i class="fas fa-leaf"></i><span>Eco Activities</span></a>
+      <a href="/users_report.html"><i class="fas fa-chart-line"></i><span>Reports</span></a>
+      <a href="/users_subscription.html"><i class="fas fa-credit-card"></i><span>Subscription</span></a>
+      <a href="/users_notify.html"><i class="fas fa-bell"></i><span>Notifications</span></a>
+	  <a href="/users_help.html"><i class="fa-solid fa-headset"></i><span>Help Center</span></a>
+      <a href="/home.html" onclick="logout()"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+    </nav>
+  </header>
+  <main>
+    <section style="width: 90%; max-width: 1100px; margin: 2rem auto;">
+      <h2 style="color: #d019a1; font-size: 2rem; margin-bottom: 1rem; border-bottom: 2px solid #004d40; padding-bottom: 0.5rem;">Your Eco Activity Log &#128203;</h2>
+
+      <div class="filters">
+        <select id="filter-type">
+			<option value="">All Types</option>
+			<option value="Tree Planting">🌱 Tree Planting </option>
+			<option value="Recycling">♻️ Recycling </option>
+			<option value="Cycling Instead of Driving">🚲 Cycling Instead of Driving </option>
+			<option value="Beach Cleanup">🌊 Beach Cleanup </option>
+			<option value="Organic Farming">🍃 Organic Farming </option>
+			<option value="Using Reusable Bags">🛍️ Using Reusable Bags </option>
+			<option value="Saving Electricity">🔌 Saving Electricity </option>
+			<option value="Conserving Water">🚿 Conserving Water </option>
+			<option value="Eco Education">📚 Eco Education </option>
+			<option value="Reducing Food Waste">🍽️ Reducing Food Waste </option>
+			<option value="Solar Energy Usage">🌞 Solar Energy Usage </option>
+			<option value="Anti-Littering Campaign">🚯 Anti-Littering Campaign </option>
+			<option value="Animal Rescue / Care">🐾 Animal Rescue / Care </option>
+			<option value="Home Composting">🏡 Home Composting </option>
+			<option value="Eco-friendly Products">🧼 Eco-friendly Products </option>
+			<option value="Public Transport Usage">🚆 Public Transport Usage </option>
+        </select>
+
+        <select id="sort-by">
+          <option value="recent">Sort by: Most Recent</option>
+          <option value="oldest">Sort by: Oldest</option>
+        </select>
+      </div>
+
+      <div class="activities-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;"></div>
+    </section>
+  </main>
+  <footer>
+      &copy; <span id="year"></span> EcoTrack | 
+  	<a href="https://mail.google.com/mail/?view=cm&to=sahinislam8371@gmail.com" target="_blank" style="text-decoration: none;color: aqua;">
+  	    Email us |
+  	<a href="/privacy.html" target="_blank" style="text-decoration: none;color: deeppink;">
+  		Privacy Policy
+    </footer>
+  <script>
+    // Set current year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Logout functionality
+    function logout() {
+      fetch('/users/user_logout', {
+        method: 'POST'
+      })
+      .then(res => res.text())
+      .then(msg => {
+        alert(msg);
+        window.location.replace = '/home.html';
+      });
+    }
+  </script>
+</body>
+</html>

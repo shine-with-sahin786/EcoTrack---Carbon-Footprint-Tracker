@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
+	<title>EcoTrack - Forgot Password</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #8360c3, #2ebf91);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: #ffffffad;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 350px;
+        }
+        h2 {
+            color: #444;
+            margin-bottom: 15px;
+        }
+        p {
+            font-family: cursive;
+			font-size: 14px;
+            color: rgb(255, 0, 255);
+			font-weight: bold;
+        }
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            background: #ff5e62;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: #e14d57;
+        }
+        .message {
+            margin-top: 15px;
+            font-size: 14px;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Answer Security Question</h2>
+        <p id="securityQuestion">Loading security question...</p>
+        <input type="text" id="answer" placeholder="Enter your answer" required>
+        <button onclick="validateAnswer()">Submit</button>
+        <p class="message" id="message"></p>
+    </div>
+
+    <script>
+        // Fetch security question from the session
+        async function fetchSecurityQuestion() {
+            try {
+                let response = await fetch("/users/forgot-session", {
+                    method: "GET",
+                    credentials: "include" // Ensures session data is sent
+                });
+
+                if (response.ok) {
+                    let question = await response.text();
+                    document.getElementById("securityQuestion").textContent = question;
+                } else {
+                    document.getElementById("securityQuestion").textContent = "Security question not found.";
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                document.getElementById("securityQuestion").textContent = "Error fetching security question.";
+            }
+        }
+
+        // Call function when page loads
+        fetchSecurityQuestion();
+
+        async function validateAnswer() {
+            let answer = document.getElementById("answer").value.trim();
+            let message = document.getElementById("message");
+
+            if (!answer) {
+                message.textContent = "Please enter an answer.";
+                return;
+            }
+
+            try {
+                let response = await fetch(`/users/fp2?answer=${encodeURIComponent(answer)}`, {
+                    method: "GET",
+                    credentials: "include", // Ensure session cookie is sent
+                    headers: { "Content-Type": "application/json" }
+                });
+
+                let result = await response.text();
+
+                if (response.ok && result === "Matched Answer") {
+                    window.location.replace("/users_fp3.html"); // Redirect to password reset page
+                } else {
+                    message.textContent = "Incorrect answer. Try again.";
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                message.textContent = "Server error. Please try again later.";
+            }
+        }
+    </script>
+</body>
+</html>

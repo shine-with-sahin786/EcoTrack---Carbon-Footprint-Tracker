@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
+	<title>EcoTrack - Forgot Password</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #8360c3, #2ebf91);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: #ffffffad;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 350px;
+        }
+        h2 {
+            color: #444;
+            margin-bottom: 15px;
+        }
+        input[type="email"] {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            background: #2ebf91;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: #27a87c;
+        }
+        .message {
+            margin-top: 15px;
+            font-size: 14px;
+            color: red;
+        }
+		p{
+			font-family: cursive;
+			color: deeppink;
+			font-weight: bold;
+		}
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Forgot Password</h2>
+        <p>Enter your registered<br>email address to continue.</p>
+        <input type="email" id="std_email" placeholder="Enter your email" required>
+        <button onclick="verifyEmail()">Verify Email</button>
+        <p class="message" id="message"></p>
+    </div>
+
+    <script>
+        async function verifyEmail() {
+            let std_email = document.getElementById("std_email").value.trim();
+            let message = document.getElementById("message");
+
+            if (!std_email) {
+                message.textContent = "Please enter your email.";
+                return;
+            }
+
+            try {
+                let response = await fetch(`/users/fp1/${encodeURIComponent(std_email)}`, {
+                    method: "GET",
+                    headers: { "Content-Type": "application/json" }
+                });
+
+                let result = await response.text();
+                console.log("Server Response:", response.status, result); // Debugging Output
+
+                if (response.ok && result === "Verified") {
+                    window.location.replace("/users_fp2.html");
+                } else {
+                    message.textContent = "Email not found. Please try again.";
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                message.textContent = "Server error. Please try again later.";
+            }
+        }
+    </script>
+
+</body>
+</html>

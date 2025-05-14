@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32"/>
+  <title>EcoTrack - User Subscription</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(to right, #e0f7fa, #ffffff);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+		height: 65px;
+      background: #004d40;
+      color: #fff;
+      padding: 0.8rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      animation: fadeInDown 1s ease-in-out;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      color: white;
+      text-decoration: none;
+      gap: 0.8rem;
+    }
+
+    .logo-container img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+    }
+
+    .logo-container strong {
+      font-size: 1.8rem;
+    }
+
+    nav {
+      display: flex;
+      gap: 2.5rem;
+    }
+
+    nav a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: white;
+      text-decoration: none;
+      font-size: 0.8rem;
+      gap: 0.2rem;
+      transition: transform 0.3s;
+    }
+
+    nav a i {
+      font-size: 1.2rem;
+    }
+
+    nav a:hover {
+      transform: scale(1.1);
+      color: #b2dfdb;
+    }
+	nav a.active {
+	  color: #03a9f4; /* Bright blue */
+	}
+
+	nav a.active i {
+	  color: #03a9f4;
+	}
+	/* ======= MAIN SECTION ======= */
+	.main-section {
+	  flex: 1;
+	  display: flex;
+	  justify-content: center;
+	  align-items: center;
+	  padding: 40px 20px;
+	  background: linear-gradient(to bottom, #ffffffcc, #e0f7fa);
+	  position: relative;
+	  overflow: hidden;
+	}
+
+	.subscription-content {
+	  max-width: 600px;
+	  width: 100%;
+	  background-color: #ffffff;
+	  border: 1px solid #ddd;
+	  border-radius: 16px;
+	  padding: 32px;
+	  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+	  animation: popUp 0.8s ease;
+	  z-index: 1;
+	}
+
+	.subscription-heading {
+	  text-align: center;
+	  color: #2e7d32;
+	  font-size: 1.5rem;
+	  margin-bottom: 24px;
+	  animation: fadeIn 1s ease-in-out;
+	}
+
+	.subscription-heading i {
+	  margin-right: 8px;
+	  color: #43a047;
+	}
+
+	.subscription-form .form-group {
+	  margin-bottom: 20px;
+	}
+
+	.subscription-form label {
+	  display: block;
+	  font-weight: 600;
+	  margin-bottom: 6px;
+	  color: #333;
+	}
+
+	.subscription-form select,
+	.subscription-form input[type="number"] {
+	  width: 100%;
+	  padding: 12px;
+	  font-size: 1rem;
+	  border: 1px solid #ccc;
+	  border-radius: 10px;
+	  transition: border-color 0.3s ease;
+	}
+
+	.subscription-form select:focus,
+	.subscription-form input:focus {
+	  border-color: #26a69a;
+	  outline: none;
+	}
+
+	.submit-btn {
+	  width: 100%;
+	  background-color: #00796b;
+	  color: #fff;
+	  padding: 12px;
+	  font-size: 1rem;
+	  border: none;
+	  border-radius: 8px;
+	  cursor: pointer;
+	  transition: background 0.3s ease;
+	}
+
+	.submit-btn:hover {
+	  background-color: #004d40;
+	}
+	.form-group {
+	  margin-bottom: 15px;
+	}
+	.form-control {
+	  width: 100%;
+	  padding: 10px;
+	  border: 1px solid #ccc;
+	  border-radius: 8px;
+	  box-sizing: border-box;
+	}
+	.payment-section {
+	  margin-top: 10px;
+	  padding: 15px;
+	  background-color: #f7fdf9;
+	  border: 1px solid #cce5cc;
+	  border-radius: 12px;
+	}
+
+	.input-group {
+	  margin-bottom: 12px;
+	}
+
+	.form-label {
+	  font-weight: 600;
+	  margin-bottom: 6px;
+	  display: block;
+	  color: #2f4f4f;
+	}
+
+	.styled-input {
+	  width: 100%;
+	  padding: 10px 12px;
+	  border: 1px solid #a1c4a1;
+	  border-radius: 8px;
+	  font-size: 15px;
+	  background-color: #ffffff;
+	  box-shadow: 1px 1px 4px rgba(0, 128, 0, 0.05);
+	  transition: border-color 0.3s ease-in-out;
+	}
+
+	.styled-input:focus {
+	  border-color: #28a745;
+	  outline: none;
+	}
+	.wallet-section {
+	  margin-top: 10px;
+	  padding: 15px;
+	  background-color: #fdfaf7;
+	  border: 1px solid #ecd9c6;
+	  border-radius: 12px;
+	}
+
+	.input-group {
+	  margin-bottom: 12px;
+	}
+
+	.form-label {
+	  font-weight: 600;
+	  margin-bottom: 6px;
+	  display: block;
+	  color: #333333;
+	}
+
+	.styled-input {
+	  width: 100%;
+	  padding: 10px 12px;
+	  border: 1px solid #ccc;
+	  border-radius: 8px;
+	  font-size: 15px;
+	  background-color: #ffffff;
+	  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.05);
+	  transition: border-color 0.3s ease-in-out;
+	}
+
+	.styled-input:focus {
+	  border-color: #ff9800;
+	  outline: none;
+	}
+    footer {
+      background: #004d40;
+      color: #fff;
+      padding: 1rem;
+      text-align: center;
+      font-size: 0.9rem;
+      animation: fadeInUp 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+
+    @keyframes popUp {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+	
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/users_dashboard_go.html" class="logo-container">
+      <img src="/images/ecotrack.jpeg" alt="Company Logo">
+      <strong>EcoTrack</strong>
+    </a>
+    <nav>
+      <a href="/users_profile.html"><i class="fas fa-user"></i><span>Profile</span></a>
+      <a href="/users_activity.html"><i class="fas fa-leaf"></i><span>Eco Activities</span></a>
+      <a href="/users_report.html"><i class="fas fa-chart-line"></i><span>Reports</span></a>
+      <a href="/users_subscription.html" class="active"><i class="fas fa-credit-card"></i><span>Subscription</span></a>
+      <a href="/users_notify.html"><i class="fas fa-bell"></i><span>Notifications</span></a>
+	  <a href="/users_help.html"><i class="fa-solid fa-headset"></i><span>Help Center</span></a>
+      <a href="/home.html" onclick="logout()"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+    </nav>
+  </header>
+
+  <main class="main-section">
+    <div class="subscription-content">
+      <h2 class="subscription-heading">
+        <i class="fas fa-leaf"></i>
+        Subscribe to <strong>Green Tier Access</strong><br>
+		To unlock Gamification! in just &#8377;49/- Monthly
+      </h2>
+
+      <form id="subscriptionForm" class="subscription-form">
+        <div class="form-group">
+          <label for="payMethod">Select Payment Method</label>
+          <select id="payMethod" name="payMethod" required>
+            <option value="">-- Choose --</option>
+            <option value="CARD">Card</option>
+            <option value="UPI">UPI</option>
+            <option value="WALLET">Net Banking</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="amount">Subscription Amount (INR)</label>
+          <input type="number" id="amount" name="amount" min="1" placeholder="Enter amount" required />
+        </div>
+		<div id="extraFields" class="form-group"></div>
+
+		<input type="hidden" id="expiry" name="expiry" />
+        <button type="submit" class="submit-btn">Subscribe Now</button>
+      </form>
+    </div>
+  </main>
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("subscriptionForm");
+    const payMethod = document.getElementById("payMethod");
+    const extraFields = document.getElementById("extraFields");
+    const expiryInput = document.getElementById("expiry");
+	
+	// Check if the user already has an active subscription
+	fetch('/users/check_subscription', {
+	  method: 'GET',
+	  headers: { 'Content-Type': 'application/json' }
+	})
+	.then(res => res.text()) // ✅ fix: use .text() because response is a plain string
+	.then(data => {
+	  if (data === "You already have an active subscription.") {
+	    window.location.href = '/users_subscription_show.html';
+	  }
+	})
+	.catch(error => {
+	  console.error("Error checking subscription status:", error);
+	});
+    // Calculate expiry date (today + 1 month)
+    const today = new Date();
+    const expiryDate = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
+    expiryInput.value = expiryDate.toISOString().split("T")[0]; // yyyy-mm-dd
+
+    payMethod.addEventListener("change", () => {
+      const type = payMethod.value;
+      let html = "";
+
+      if (type === "CARD") {
+        html = `
+		<div class="form-group">
+		    <label>Cardholder Name</label>
+		    <input type="text" class="form-control" placeholder="John Doe" required />
+		  </div>
+		  <div class="form-group">
+		    <label>Card Number</label>
+		    <input type="text" class="form-control" placeholder="XXXX-XXXX-XXXX-1234" required />
+		  </div>
+		  <div class="form-group">
+		    <label>CVV</label>
+		    <input type="text" class="form-control" placeholder="123" required />
+		  </div>
+		  <div class="form-group">
+		    <label>Card Expiry</label>
+		    <input type="month" class="form-control" required />
+		  </div>`;
+      } else if (type === "UPI") {
+        html = `
+		<div class="payment-section">
+		  <div class="input-group">
+		    <label for="upiId" class="form-label">UPI ID</label>
+		    <input type="text" id="upiId" class="form-control styled-input" placeholder="john@upi" required />
+		  </div>
+		  <div class="input-group">
+		    <label for="upiProvider" class="form-label">UPI Provider</label>
+		    <input type="text" id="upiProvider" class="form-control styled-input" placeholder="Google Pay / PhonePe" required />
+		  </div>
+		</div>`;
+      } else if (type === "WALLET") {
+        html = `
+		<div class="wallet-section">
+		  <div class="input-group">
+		    <label for="walletMobile" class="form-label">Mobile Number</label>
+		    <input type="tel" id="walletMobile" class="form-control styled-input" placeholder="9876543210" required />
+		  </div>
+		  <div class="input-group">
+		    <label for="walletProvider" class="form-label">Wallet Provider</label>
+		    <input type="text" id="walletProvider" class="form-control styled-input" placeholder="Paytm / Mobikwik" required />
+		  </div>
+		</div>`;
+      }
+
+      extraFields.innerHTML = html;
+    });
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+	  const data = {
+	    payMethod: payMethod.value,      // ✅ correct key that matches DTO
+	    amount: parseInt(document.getElementById("amount").value),
+	    expiry: expiryInput.value
+	  };
+
+      fetch("/users/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      })
+      .then(res => {
+        if (!res.ok) throw new Error("Subscription failed");
+        return res.text();
+      })
+      .then(() => window.location.href = "users_subscription_ok.html")
+      .catch(err => alert("Error: " + err.message));
+    });
+  });
+  </script>
+
+  <footer>
+    &copy; <span id="year"></span> EcoTrack | 
+	<a href="https://mail.google.com/mail/?view=cm&to=sahinislam8371@gmail.com" target="_blank" style="text-decoration: none;color: aqua;">
+	    Email us |
+	<a href="/privacy.html" target="_blank" style="text-decoration: none;color: deeppink;">
+		Privacy Policy
+  </footer>
+
+  <script>
+    // Set current year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+    // Logout functionality
+    function logout() {
+      fetch('/users/user_logout', {
+        method: 'POST'
+      })
+      .then(res => res.text())
+      .then(msg => {
+        alert(msg);
+        window.location.replace = ('/home.html');
+      });
+    }
+  </script>
+</body>
+</html>

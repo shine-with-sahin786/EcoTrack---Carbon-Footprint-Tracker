@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32"/>
+  <title>EcoTrack - User Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	  font-weight: bold;
+    }
+
+    body {
+      background: linear-gradient(to right, #e0f7fa, #ffffff);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+		height: 65px;
+      background: #004d40;
+      color: #fff;
+      padding: 0.8rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      animation: fadeInDown 1s ease-in-out;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      color: white;
+      text-decoration: none;
+      gap: 0.8rem;
+    }
+
+    .logo-container img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+    }
+
+    .logo-container strong {
+      font-size: 1.8rem;
+    }
+
+    nav {
+      display: flex;
+      gap: 2.5rem;
+    }
+
+    nav a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: white;
+      text-decoration: none;
+      font-size: 0.8rem;
+      gap: 0.2rem;
+      transition: transform 0.3s;
+    }
+
+    nav a i {
+      font-size: 1.2rem;
+    }
+
+    nav a:hover {
+      transform: scale(1.1);
+      color: #b2dfdb;
+    }
+	nav a.active {
+	  color: #03a9f4; /* Bright blue */
+	}
+
+	nav a.active i {
+	  color: #03a9f4;
+	}
+
+
+    main {
+      flex: 1;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    footer {
+      background: #004d40;
+      color: #fff;
+      padding: 1rem;
+      text-align: center;
+      font-size: 0.9rem;
+      animation: fadeInUp 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+
+    @keyframes popUp {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/users_dashboard_go.html" class="logo-container">
+      <img src="/images/ecotrack.jpeg" alt="Company Logo">
+      <strong>EcoTrack</strong>
+    </a>
+    <nav>
+      <a href="/users_profile.html" class="active"><i class="fas fa-user"></i><span>Profile</span></a>
+      <a href="/users_activity.html"><i class="fas fa-leaf"></i><span>Eco Activities</span></a>
+      <a href="/users_report.html"><i class="fas fa-chart-line"></i><span>Reports</span></a>
+      <a href="/users_subscription.html"><i class="fas fa-credit-card"></i><span>Subscription</span></a>
+      <a href="/users_notify.html"><i class="fas fa-bell"></i><span>Notifications</span></a>
+	  <a href="/users_help.html"><i class="fa-solid fa-headset"></i><span>Help Center</span></a>
+      <a href="/home.html" onclick="logout()"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+    </nav>
+  </header>
+  <main>
+    <div style="max-width: 800px; width: 50%; padding: 2rem; background:#ffffff30; border-radius: 12px; border:2px solid #f94ff3; margin-top: 10px; margin-bottom: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); animation: fadeIn 1s ease-in;">
+      <h2 style="text-align:center; margin-bottom: 1.5rem; color: rgb(0, 0, 255); font-family: cursive;">Your Profile &#128151;</h2>
+
+      <!-- SECTION 1: Profile Picture -->
+      <div style="text-align: center; margin-bottom: 2rem;">
+        <img id="profilePic" src="/images/nodp.jpg" alt="Profile Picture" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 3px solid #004d40;">
+        <div id="uploadControls" style="margin-top: 1rem;">
+          <input type="file" id="imageInput" style="display: none;" />
+          <button onclick="document.getElementById('imageInput').click()" style="padding: 0.5rem 1.2rem; background-color: #00796b; color: white; border: none; border-radius: 5px; cursor: pointer;">
+            Upload Image
+          </button>
+        </div>
+        <div id="deleteControls" style="display: none; margin-top: 1rem;">
+          <button onclick="deleteImage()" style="padding: 0.5rem 1.2rem; background-color: crimson; color: white; border: none; border-radius: 5px; cursor: pointer;">
+            Delete Image
+          </button>
+        </div>
+      </div>
+
+      <!-- SECTION 2: User Info -->
+      <form id="profileForm" onsubmit="updateProfile(event)" style="display: flex; flex-direction: column; gap: 1rem;">
+        <label>Email:
+          <input type="email" id="email" readonly style="width: 100%; padding: 0.6rem; border: 1px solid #ccc; border-radius: 6px;" />
+        </label>
+        <label>Name:
+          <input type="text" id="name" required style="width: 100%; padding: 0.6rem; border: 1px solid #ccc; border-radius: 6px;" />
+        </label>
+        <label>Address:
+          <input type="text" id="address" required style="width: 100%; padding: 0.6rem; border: 1px solid #ccc; border-radius: 6px;" />
+        </label>
+        <button type="submit" style="padding: 0.7rem; background-color: #004d40; color: white; border: none; border-radius: 6px; font-size: 1rem; cursor: pointer;">
+          Update Profile
+        </button>
+      </form>
+    </div>
+	<script>
+	  const profilePic = document.getElementById('profilePic');
+	  const imageInput = document.getElementById('imageInput');
+	  const uploadControls = document.getElementById('uploadControls');
+	  const deleteControls = document.getElementById('deleteControls');
+
+	  // Load session data
+	  window.onload = async function () {
+	    try {
+	      const sessionRes = await fetch('/users/login_session');
+	      const data = await sessionRes.json();
+	      if (sessionRes.ok) {
+	        document.getElementById('email').value = data.email;
+	        document.getElementById('name').value = data.name;
+	        document.getElementById('address').value = data.address;
+	      }
+
+	      const imgRes = await fetch('/users/view_pp');
+	      if (imgRes.ok) {
+	        const imgData = await imgRes.json();
+	        profilePic.src = imgData.imageUrl; // ✅ Using image URL from backend
+	        uploadControls.style.display = 'none';
+	        deleteControls.style.display = 'block';
+	      } else {
+	        uploadControls.style.display = 'block';
+	        deleteControls.style.display = 'none';
+	      }
+	    } catch (e) {
+	      console.error(e);
+	    }
+	  };
+
+	  // Handle image upload
+	  imageInput.addEventListener('change', async function () {
+	    const file = this.files[0];
+	    if (file) {
+	      const formData = new FormData();
+	      formData.append('imageFile', file);
+
+	      const res = await fetch('/users/pp_upload', {
+	        method: 'POST',
+	        body: formData
+	      });
+
+	      if (res.ok) {
+	        const result = await fetch('/users/view_pp');
+	        const imgData = await result.json();
+	        profilePic.src = imgData.imageUrl; // ✅ Use image URL
+	        uploadControls.style.display = 'none';
+	        deleteControls.style.display = 'block';
+
+	        setTimeout(() => {
+	          window.location.href = "/users_upload_pp_ok.html";
+	        }, 1000);
+	      } else {
+	        const err = await res.text();
+	        console.error("Image upload failed:", res.status, err);
+	        alert("Image upload failed. Try again.");
+	      }
+	    }
+	  });
+
+	  // Handle delete image
+	  async function deleteImage() {
+	    const res = await fetch('/users/delete_pp', {
+	      method: 'DELETE'
+	    });
+
+	    if (res.ok) {
+	      profilePic.src = '/images/nodp.jpg';
+	      uploadControls.style.display = 'block';
+	      deleteControls.style.display = 'none';
+	      window.location.href = "/users_delete_pp_ok.html";
+	    }
+	  }
+
+	  // Handle profile update
+	  async function updateProfile(e) {
+	    e.preventDefault();
+	    const name = document.getElementById('name').value;
+	    const address = document.getElementById('address').value;
+
+	    const form = new URLSearchParams();
+	    form.append('name', name);
+	    form.append('address', address);
+
+	    const res = await fetch('/users/update_profile', {
+	      method: 'POST',
+	      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+	      body: form
+	    });
+
+	    if (res.ok) {
+	      window.location.href = "/user_prof_updt_ok.html";
+	    }
+	  }
+	</script>
+  </main>
+  <footer>
+    &copy; <span id="year"></span> EcoTrack | 
+	<a href="https://mail.google.com/mail/?view=cm&to=sahinislam8371@gmail.com" target="_blank" style="text-decoration: none;color: aqua;">
+	    Email us |
+	<a href="/privacy.html" target="_blank" style="text-decoration: none;color: deeppink;">
+		Privacy Policy
+  </footer>
+
+</body>
+</html>

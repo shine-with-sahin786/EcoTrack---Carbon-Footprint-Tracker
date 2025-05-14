@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32"/>
+  <title>EcoTrack - Admin Send Message</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(to right, #e0f7fa, #ffffff);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+		height: 65px;
+      background: #004d40;
+      color: #fff;
+      padding: 0.8rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      animation: fadeInDown 1s ease-in-out;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      color: white;
+      text-decoration: none;
+      gap: 0.8rem;
+    }
+
+    .logo-container img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+    }
+
+    .logo-container strong {
+      font-size: 1.8rem;
+    }
+
+    nav {
+      display: flex;
+      gap: 2.5rem;
+    }
+
+    nav a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: white;
+      text-decoration: none;
+      font-size: 0.8rem;
+      gap: 0.2rem;
+      transition: transform 0.3s;
+    }
+
+    nav a i {
+      font-size: 1.2rem;
+    }
+
+    nav a:hover {
+      transform: scale(1.1);
+      color: #b2dfdb;
+    }
+	nav a.active {
+	  color: #03a9f4; /* Bright blue */
+	}
+
+	nav a.active i {
+	  color: #03a9f4;
+	}
+	main {
+	  flex: 1;
+	  display: flex;
+	  align-items: center;
+	  justify-content: center;
+	  padding: 2.5rem;
+	  background: linear-gradient(to bottom right, #f0fdfa, #ffffff);
+	  animation: fadeIn 1s ease-in-out;
+	}
+
+	main form {
+	  background: #ffffff7a;
+	  padding: 2.5rem 2rem;
+	  border-radius: 20px;
+	  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
+	  width: 100%;
+	  max-width: 650px;
+	  animation: popUp 0.6s ease-in-out;
+	  border:3px solid #bf81f3;
+	}
+
+	main h2 {
+	  margin-bottom: 0.8rem;
+	  font-size: 1.75rem;
+	  color: #0600ff;
+	  text-align: center;
+	  font-family: cursive;
+	}
+
+	main .subheading {
+	  margin-bottom: 1.5rem;
+	  color: #cb0692;
+	  font-size: 1.05rem;
+	  text-align: center;
+	  font-weight: bold;
+	  font-style: italic;
+	}
+
+	main textarea {
+	  width: 100%;
+	  padding: 1rem;
+	  border: 1px solid #cbd5e1;
+	  border-radius: 12px;
+	  font-size: 1rem;
+	  resize: vertical;
+	  min-height: 150px;
+	  outline: none;
+	  transition: border-color 0.3s, box-shadow 0.3s;
+	}
+
+	main textarea:focus {
+	  border-color: #0f766e;
+	  box-shadow: 0 0 10px rgba(15, 118, 110, 0.2);
+	}
+
+	main button {
+	  display: inline-block;
+	  background: linear-gradient(to right, #0f766e, #115e59);
+	  color: white;
+	  padding: 0.85rem 1.2rem;
+	  border: none;
+	  border-radius: 12px;
+	  font-size: 1rem;
+	  cursor: pointer;
+	  margin-top: 1.2rem;
+	  width: 100%;
+	  transition: transform 0.2s, box-shadow 0.3s;
+	}
+
+	main button:hover {
+	  transform: translateY(-2px);
+	  box-shadow: 0 6px 12px rgba(15, 118, 110, 0.3);
+	}
+
+	main #status {
+	  margin-top: 1.2rem;
+	  font-size: 0.95rem;
+	  color: #334155;
+	  text-align: center;
+	}
+
+
+    footer {
+      background: #004d40;
+      color: #fff;
+      padding: 1rem;
+      text-align: center;
+      font-size: 0.9rem;
+      animation: fadeInUp 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+
+    @keyframes popUp {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/admin_dashboard.html" class="logo-container">
+      <img src="/images/ecotrack.jpeg" alt="Company Logo">
+      <strong>EcoTrack</strong>
+    </a>
+    <nav>
+      <a href="/admin_system_usg.html"><i class="fa-solid fa-display"></i><span>System Usage</span></a>
+      <a href="/admin_revenue.html"><i class="fa-solid fa-money-bill-trend-up"></i><span>Monitor Revenue</span></a>
+      <a href="/admin_report.html"><i class="fa-brands fa-pagelines"></i><span>Eco Reports</span></a>
+      <a href="/admin_subscription.html"><i class="fas fa-credit-card"></i><span>Subscriptions</span></a>
+      <a href="/admin_support.html"><i class="fa-solid fa-handshake-angle"></i><span>Support</span></a>
+      <a href="/home.html" onclick="logout()"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+    </nav>
+  </header>
+
+  <main>
+    <form id="messageForm">
+      <h2>Send Message &#128236;</h2>
+      <div class="subheading" id="emailDisplay">Sending to: loading...</div>
+      <textarea id="messageText" placeholder="Type your message here..."></textarea>
+      <button type="submit">Send</button>
+      <p id="status"></p>
+    </form>
+  </main>
+
+  <script>
+    const form = document.getElementById('messageForm');
+    const status = document.getElementById('status');
+    const emailDisplay = document.getElementById('emailDisplay');
+
+    const email = localStorage.getItem('selectedUserEmail');
+
+    // Update the email display on page load
+    if (email) {
+      emailDisplay.textContent = `Sending to: ${email}`;
+    } else {
+      emailDisplay.textContent = `Sending to: [No email selected]`;
+      emailDisplay.style.color = "red";
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const message = document.getElementById('messageText').value;
+
+      if (!email || !message.trim()) {
+        status.textContent = "Email or message is missing.";
+        status.style.color = "red";
+        return;
+      }
+
+      const payload = {
+        notification: message
+      };
+
+      try {
+        const response = await fetch(`/notify/add?email=${encodeURIComponent(email)}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await response.text();
+        status.textContent = result;
+        status.style.color = "green";
+        form.reset();
+      } catch (error) {
+        status.textContent = "Error sending message.";
+        status.style.color = "red";
+      }
+    });
+  </script>
+
+  <footer>
+    &copy; <span id="year"></span> EcoTrack | 
+    <a href="https://mail.google.com/mail/?view=cm&to=sahinislam8371@gmail.com" target="_blank" style="text-decoration: none;color: aqua;">
+      Email us |
+    </a>
+    <a href="/privacy.html" target="_blank" style="text-decoration: none;color: deeppink;">
+      Privacy Policy
+    </a>
+  </footer>
+
+  <script>
+    // Set current year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+	// Logout functionality
+	    function logout() {
+	      fetch('/admin/admin_logout', {
+	        method: 'POST'
+	      })
+	      .then(res => res.text())
+	      .then(msg => {
+	        alert(msg);
+	        window.location.replace = '/home.html';
+	      });
+	    }
+  </script>
+
+</body>
+</html>

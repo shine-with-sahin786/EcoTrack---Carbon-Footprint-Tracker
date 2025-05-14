@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoTrack - Create Account</title>
+	<link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #66ffcc, rgb(85, 170, 170));
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: white;
+        }
+        .form-container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            width: 600px;
+            text-align: center;
+        }
+        .form-container h1 {
+            color: #3096f1;
+			font-family: cursive;
+        }
+        .input-group {
+            position: relative;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        .input-group input, .input-group select, .input-group textarea {
+            width: 90%;
+            padding: 10px 40px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .input-group i {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #2d6a4f;
+        }
+        .submit-btn {
+            width: 100%;
+            background: #2d6a4f;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s ease-in-out;
+        }
+        .submit-btn:hover {
+            background: #409080;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1><i class="fa-solid fa-user-plus"></i> Create Your Account</h1>
+        <form id="registerForm">
+            <div class="input-group">
+                <i class="fa-solid fa-user"></i>
+                <input type="text" id="name" placeholder="Full Name" required>
+            </div>
+            <div class="input-group">
+                <i class="fa-solid fa-envelope"></i>
+                <input type="email" id="email" placeholder="Email" required>
+            </div>
+            <div class="input-group">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" id="password" placeholder="Password" required>
+            </div>
+            <div class="input-group">
+                <i class="fa-solid fa-question-circle"></i>
+                <select id="security_qs" required>
+                    <option value="">Select Security Question</option>
+                    <option value="What is your pet's name?">What is your first pet's name?</option>
+                    <option value="What is your favorite color?">What is your favorite color?</option>
+                    <option value="What is your favorite fruit?">What is your favorite fruit?</option>
+					<option value="What is your hobby?">What is your hobby?</option>
+					<option value="What is your favorite Anime?">What is your favorite Anime??</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <i class="fa-solid fa-key"></i>
+                <input type="text" id="answer" placeholder="Answer" required>
+            </div>
+            <div class="input-group">
+                <i class="fa-solid fa-calendar"></i>
+                <input type="date" id="birthday" required>
+            </div>
+            <div class="input-group">
+                <i class="fa-solid fa-map-marker-alt"></i>
+                <textarea id="address" placeholder="Enter your address" required></textarea>
+            </div>
+            <div class="input-group">
+                <i class="fa-solid fa-venus-mars"></i>
+                <select id="gender" required>
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <button type="submit" class="submit-btn">Register</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("registerForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const userData = {
+                name: document.getElementById("name").value.trim(),
+                email: document.getElementById("email").value.trim(),
+                password: document.getElementById("password").value.trim(),
+                security_qs: document.getElementById("security_qs").value.trim(),
+                answer: document.getElementById("answer").value.trim(),
+                birthday: document.getElementById("birthday").value.trim(),
+                address: document.getElementById("address").value.trim(),
+                gender: document.getElementById("gender").value.trim()
+            };
+
+            fetch("/users/create", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(userData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Registration failed");
+                }
+                return response.text();
+            })
+            .then(() => {
+                window.location.replace("/users_register_ok.html");
+            })
+            .catch(error => {
+                alert("Error: " + error.message);
+            });
+        });
+    </script>
+</body>
+</html>

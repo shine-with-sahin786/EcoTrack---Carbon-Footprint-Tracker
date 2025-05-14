@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32"/>
+  <title>EcoTrack - System Usage</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(to right, #e0f7fa, #ffffff);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+		height: 65px;
+      background: #004d40;
+      color: #fff;
+      padding: 0.8rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      animation: fadeInDown 1s ease-in-out;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      color: white;
+      text-decoration: none;
+      gap: 0.8rem;
+    }
+
+    .logo-container img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+    }
+
+    .logo-container strong {
+      font-size: 1.8rem;
+    }
+
+    nav {
+      display: flex;
+      gap: 2.5rem;
+    }
+
+    nav a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: white;
+      text-decoration: none;
+      font-size: 0.8rem;
+      gap: 0.2rem;
+      transition: transform 0.3s;
+    }
+
+    nav a i {
+      font-size: 1.2rem;
+    }
+
+    nav a:hover {
+      transform: scale(1.1);
+      color: #b2dfdb;
+    }
+	nav a.active {
+	  color: #03a9f4; /* Bright blue */
+	}
+
+	nav a.active i {
+	  color: #03a9f4;
+	}
+
+
+    main {
+      flex: 1;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    footer {
+      background: #004d40;
+      color: #fff;
+      padding: 1rem;
+      text-align: center;
+      font-size: 0.9rem;
+      animation: fadeInUp 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+
+    @keyframes popUp {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/admin_dashboard.html" class="logo-container">
+      <img src="/images/ecotrack.jpeg" alt="Company Logo">
+      <strong>EcoTrack</strong>
+    </a>
+    <nav>
+      <a href="/admin_system_usg.html" class="active"><i class="fa-solid fa-display"></i><span>System Usage</span></a>
+      <a href="/admin_revenue.html"><i class="fa-solid fa-money-bill-trend-up"></i><span>Monitor Revenue</span></a>
+      <a href="/admin_report.html"><i class="fa-brands fa-pagelines"></i><span>Eco Reports</span></a>
+      <a href="/admin_subscription.html"><i class="fas fa-credit-card"></i><span>Subscriptions</span></a>
+      <a href="/admin_support.html"><i class="fa-solid fa-handshake-angle"></i><span>Support</span></a>
+      <a href="/home.html" onclick="logout()"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+    </nav>
+  </header>
+
+  <main>
+    <section style="padding: 2rem; width: 100%; max-width: 1200px;">
+      <h2 style="font-size: 2rem; margin-bottom: 1.5rem; color: #d8009a;">&#127808; EcoTrack System Usage</h2>
+
+      <!-- Monthly & Yearly Usage -->
+      <div style="display: flex; gap: 2rem; flex-wrap: wrap; margin-bottom: 2rem;">
+        <div style="flex: 1; min-width: 300px; background: #e1f5fe; border-radius: 12px; padding: 1rem; box-shadow: 0 0 10px rgba(0,0,0,0.1); animation: fadeIn 1s ease;">
+          <h3 style="color: #00796b;">Monthly Gender Stats</h3>
+          <div id="monthly-gender-usage"></div>
+        </div>
+        <div style="flex: 1; min-width: 300px; background: #fff3e0; border-radius: 12px; padding: 1rem; box-shadow: 0 0 10px rgba(0,0,0,0.1); animation: fadeIn 1s ease;">
+          <h3 style="color: #e65100;">Monthly Age Stats</h3>
+          <div id="monthly-age-usage"></div>
+        </div>
+        <div style="flex: 1; min-width: 300px; background: #f3e5f5; border-radius: 12px; padding: 1rem; box-shadow: 0 0 10px rgba(0,0,0,0.1); animation: fadeIn 1s ease;">
+          <h3 style="color: #6a1b9a;">Monthly Total Users</h3>
+          <div id="monthly-total-users"></div>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 2rem; flex-wrap: wrap; margin-bottom: 3rem;">
+        <div style="flex: 1; min-width: 300px; background: #e0f7fa; border-radius: 12px; padding: 1rem; box-shadow: 0 0 10px rgba(0,0,0,0.1); animation: fadeIn 1s ease;">
+          <h3 style="color: #004d40;">Yearly Gender Stats</h3>
+          <div id="yearly-gender-usage"></div>
+        </div>
+        <div style="flex: 1; min-width: 300px; background: #fff9c4; border-radius: 12px; padding: 1rem; box-shadow: 0 0 10px rgba(0,0,0,0.1); animation: fadeIn 1s ease;">
+          <h3 style="color: #fbc02d;">Yearly Age Stats</h3>
+          <div id="yearly-age-usage"></div>
+        </div>
+        <div style="flex: 1; min-width: 300px; background: #ede7f6; border-radius: 12px; padding: 1rem; box-shadow: 0 0 10px rgba(0,0,0,0.1); animation: fadeIn 1s ease;">
+          <h3 style="color: #4527a0;">Yearly Total Users</h3>
+          <div id="yearly-total-users"></div>
+        </div>
+      </div>
+
+      <!-- Summary Stats -->
+      <div style="background: #ffffff; border-radius: 12px; padding: 1.5rem; box-shadow: 0 0 15px rgba(0,0,0,0.1); animation: fadeInUp 1s ease;">
+        <h2 style="color: #004d40; margin-bottom: 1rem;">User Summary</h2>
+        <div style="display: flex; flex-wrap: wrap; gap: 2rem;">
+          <div style="flex: 1; min-width: 250px;">
+            <h4 style="color: #00796b;">Total Users</h4>
+            <p id="total-users" style="font-size: 1.5rem;"></p>
+          </div>
+          <div style="flex: 1; min-width: 250px;">
+            <h4 style="color: #e65100;">Age-wise Count</h4>
+            <div id="age-wise-count"></div>
+          </div>
+          <div style="flex: 1; min-width: 250px;">
+            <h4 style="color: #6a1b9a;">Gender-wise Count</h4>
+            <div id="gender-wise-count"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script>
+	  document.addEventListener('DOMContentLoaded', () => {
+	    fetch('/admin/system-usage')
+	      .then(res => res.json())
+	      .then(data => {
+	        const now = new Date();
+	        const currentMonth = now.getMonth();
+	        const currentYear = now.getFullYear();
+
+	        let monthly = { gender: {}, age: {}, total: 0 };
+	        let yearly = { gender: {}, age: {}, total: 0 };
+	        let allTime = { gender: {}, age: {}, total: 0 };
+
+	        // Helper function to calculate age from birthday
+	        function calculateAge(birthday) {
+	          const birthDate = new Date(birthday);
+	          const ageDiff = now - birthDate;
+	          const ageDate = new Date(ageDiff);
+	          return Math.abs(ageDate.getUTCFullYear() - 1970); // Returns the age
+	        }
+
+	        // Helper function to extract year and month from 'today' (user creation date)
+	        function getYearAndMonth(today) {
+	          const todayDate = new Date(today);
+	          const year = todayDate.getFullYear();
+	          const month = todayDate.getMonth();
+	          return { year, month };
+	        }
+
+	        data.forEach(user => {
+	          const birthday = user.birthday || "Unknown";
+	          const gender = user.gender || "Unknown";
+	          const age = calculateAge(birthday); // Calculate the age from birthday
+	          const { year: userYear, month: userMonth } = getYearAndMonth(user.today); // Get year and month from today
+
+	          // All Time stats
+	          allTime.total++;
+	          allTime.gender[gender] = (allTime.gender[gender] || 0) + 1;
+	          allTime.age[age] = (allTime.age[age] || 0) + 1;
+
+	          // Yearly stats: Check if the user was created this year
+	          if (userYear === currentYear) {
+	            yearly.total++;
+	            yearly.gender[gender] = (yearly.gender[gender] || 0) + 1;
+	            yearly.age[age] = (yearly.age[age] || 0) + 1;
+	          }
+
+	          // Monthly stats: Check if the user was created this month
+	          if (userYear === currentYear && userMonth === currentMonth) {
+	            monthly.total++;
+	            monthly.gender[gender] = (monthly.gender[gender] || 0) + 1;
+	            monthly.age[age] = (monthly.age[age] || 0) + 1;
+	          }
+	        });
+
+	        // Update DOM with calculated values
+	        document.getElementById('monthly-gender-usage').innerHTML = generateList(monthly.gender);
+	        document.getElementById('monthly-age-usage').innerHTML = generateList(monthly.age);
+	        document.getElementById('monthly-total-users').textContent = monthly.total;
+
+	        document.getElementById('yearly-gender-usage').innerHTML = generateList(yearly.gender);
+	        document.getElementById('yearly-age-usage').innerHTML = generateList(yearly.age);
+	        document.getElementById('yearly-total-users').textContent = yearly.total;
+
+	        document.getElementById('total-users').textContent = allTime.total;
+	        document.getElementById('gender-wise-count').innerHTML = generateList(allTime.gender);
+	        document.getElementById('age-wise-count').innerHTML = generateList(allTime.age);
+	      });
+
+	    // Utility function to generate HTML list
+	    function generateList(obj) {
+	      return `
+	        <ul style="padding-left: 1rem;">
+	          ${Object.entries(obj).map(([key, value]) => `<li><strong>${key}</strong>: ${value}</li>`).join('')}
+	        </ul>
+	      `;
+	    }
+	  });
+	</script>
+  </main>
+  <footer>
+    &copy; <span id="year"></span> EcoTrack | 
+    <a href="https://mail.google.com/mail/?view=cm&to=sahinislam8371@gmail.com" target="_blank" style="text-decoration: none;color: aqua;">
+      Email us |
+    </a>
+    <a href="/privacy.html" target="_blank" style="text-decoration: none;color: deeppink;">
+      Privacy Policy
+    </a>
+  </footer>
+
+  <script>
+    // Set current year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+	// Logout functionality
+	    function logout() {
+	      fetch('/admin/admin_logout', {
+	        method: 'POST'
+	      })
+	      .then(res => res.text())
+	      .then(msg => {
+	        alert(msg);
+	        window.location.replace = '/home.html';
+	      });
+	    }
+  </script>
+
+</body>
+</html>

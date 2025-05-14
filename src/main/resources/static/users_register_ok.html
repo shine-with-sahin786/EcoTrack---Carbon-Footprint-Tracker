@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>EcoTrack - Account Created</title>
+		<link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
+	</head>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(to right, #f0f2f5, #c9d6ff); /* Pleasing calm background */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    .container {
+        text-align: center;
+        background-color: #fff;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+        animation: fadeIn 1s ease-in-out;
+    }
+
+    .container img {
+        width: 100px;
+        height: 100px;
+        animation: bounceIn 1s ease-in-out;
+    }
+
+    .message {
+        margin-top: 20px;
+        font-size: 20px;
+        font-weight: bold;
+        color: #333;
+        animation: fadeInUp 1s ease-in-out;
+    }
+
+    .link {
+        margin-top: 20px;
+        display: inline-block;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        background-color: #4CAF50; /* Green */
+        color: white;
+        text-decoration: none;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .link:hover {
+        background-color: #45a049;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    @keyframes bounceIn {
+        from { transform: scale(0.5); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <img src="/images/tick.jpg" alt="Tick Up Sign">
+    <div class="message">Your account has successfully been created.</div>
+    <a href="/users_login.html" class="link">Go to Login Page</a>
+</div>
+</body>
+</html>

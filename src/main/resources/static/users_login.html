@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>EcoTrack - Users Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+	<link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+			background: linear-gradient(to right, #66ffcc 0%, rgb(64, 128, 128) 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: #fff;
+            text-align: center;
+        }
+        h1 { color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); }
+        h2 { color: yellow; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); margin-top: -10px; font-family: cursive; }
+        .form-container {
+            background: rgba(255, 255, 255, 0.85);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            width: 350px;
+            position: relative;
+        }
+        .form-container input {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+        .buttons button {
+            padding: 8px 65px;
+            border-radius: 5px;
+            border: none;
+            background-color: #24b929;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .buttons button.reset { background-color: #2b3231; }
+        .message {
+            margin-top: 10px;
+            font-weight: bold;
+            color: red;
+        }
+        .links {
+            margin-top: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .links a {
+            text-decoration: none;
+            font-weight: bold;
+            padding: 8px 12px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+        .forget-password { background-color: #ff9800; color: white; }
+        .create-account { background-color: #007bff; color: white; }
+		#logout-link i {
+		margin-top: 20px;
+		font-size: 18px;
+		color: rgb(255, 0, 128);
+		transition: color 0.3s ease;
+		}
+		label{
+			font-family: cursive;
+			color: blue;
+			font-weight: bold;
+		}
+    </style>
+</head>
+<body>
+
+	<h1>Welcome to EcoTrack &#127793;</h1>
+	<h2>Access your dashboard and track your impact</h2>
+    
+    <div class="form-container">
+        <form id="loginForm">
+            <label for="email">Enter Your Email:</label>
+            <input type="email" id="email" required>
+            <label for="password">Enter Your Password:</label>
+            <input type="password" id="password" required>
+            <div class="buttons">
+                <button type="submit">Login</button>
+                <button type="button" class="reset" onclick="resetForm()">Reset</button>
+            </div>
+        </form>
+        <p class="message" id="message"></p>
+        <div class="links">
+            <a href="/users_fp1.html" target="_blank" class="forget-password">Forgot Password</a>
+            <a href="/users_register.html" target="_blank" class="create-account">Create Account</a>
+        </div>
+    </div>
+	<a href="/admin_login.html" class="nav-link" id="logout-link"><i class="fa-solid fa-user-tie fa-beat-fade"><br><br>Admin Login</i></a>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("email").focus(); // Autofocus on email field
+
+            // Attach event listener for form submission
+            document.getElementById("loginForm").addEventListener("submit", function (event) {
+                event.preventDefault();
+                submitForm(); // Call the function to handle login
+            });
+        });
+
+        function submitForm() {
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value.trim();
+            const messageBox = document.getElementById("message");
+
+            if (!email || !password) {
+                alert("Fields cannot be empty.");
+                messageBox.style.color = "red";
+                messageBox.innerText = "Both fields are required!";
+                return;
+            }
+
+            fetch(`/users/login/${email}`, { 
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ password }) // Only send password, email is in URL
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.text(); // Read response as text
+                } else {
+                    throw new Error("Invalid Credentials");
+                }
+            })
+            .then(() => {
+                messageBox.style.color = "green";
+                messageBox.innerText = "Login Successful! Redirecting...";
+
+                setTimeout(() => {
+                    window.location.replace("/users_dashboard.html"); // Redirect on success
+                }, 1500);
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                messageBox.style.color = "red";
+                messageBox.innerText = "Login failed: " + error.message;
+                alert("Login failed: " + error.message);
+            });
+        }
+
+        function resetForm() {
+            document.getElementById("loginForm").reset();
+            document.getElementById("message").innerText = "";
+        }
+    </script>
+</body>
+</html>
